@@ -10,6 +10,9 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 
+def home(request):
+    return render_to_response('link.html', context_instance=RequestContext(request))
+
 def linkgoogle(request):
     url = 'https://accounts.google.com/o/oauth2/auth?client_id='+settings.CLIENT_ID+'&redirect_uri=http://127.0.0.1:8000/oauth2callback&scope=https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtubepartner-channel-audit https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtubepartner&response_type=code&access_type=offline'
     return HttpResponseRedirect(url)
@@ -29,6 +32,12 @@ def callback(request):
     past_two = today - datetime.timedelta(60)
     past_four = today - datetime.timedelta(120)
     past_lifetime = '1971-01-01'
+    # response = requests.get('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=UCmokFxOysKH73pjudQGDfjQ&fields=items(contentDetails(relatedPlaylists))&access_token=%s' % access_token)
+    # response = json.loads(response.text)
+    # print response
+    # response = urlparse.parse_qs(response.text)
+    # print type(response)
+    # print "channel list"
     response = requests.get('https://www.googleapis.com/youtube/v3/channels?part=id&mine=true&fields=items(id)&access_token=%s' % access_token)
     channel = str(json.loads(response.text)['items'][0]['id'])
     print channel, "channel_id"
@@ -53,12 +62,17 @@ def callback(request):
     except:
         past_lifetime_views = 0.0
     print past_lifetime_views
+    response = requests.get('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=%s&fields=items(contentDetails(relatedPlaylists(uploads)))&access_token=%s' % (channel, access_token))
+    upload_playlist = json.loads(response.text)['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+    print upload_playlist, "upload_playlist"
     result = {'Last 60 Days Views': past_two_views, 'Last 120 Days Views': past_four_views, 'Lifetime Avg Views': past_lifetime_views}
     return HttpResponse(json.dumps(result))
-def channel_id(request):
-	return render_to_response('channel.html', context_instance=RequestContext(request))
+
+
+# def channel_id(request):
+#     return render_to_response('channel.html', context_instance=RequestContext(request))
 
 # def info(request):
-# 	channel_id=requests.POST.get('channel_id')
-# 	payload = 
-# 	response = requests.get('https://www.googleapis.com/youtube/v3/videos')
+#     channel_id=ChannelId.objects.all()
+#     print channel_id
+#     return HttpResponse(channel_id)

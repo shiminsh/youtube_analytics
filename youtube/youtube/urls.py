@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'youtube.views.home', name="home"),
     url(r'^link/google/$', 'youtube.views.linkgoogle', name="linkgoogle"),
     url(r'^oauth2callback/$', 'youtube.views.callback', name='callback'),
     url(r'^channel/$', 'youtube.views.channel_id', name='channel_id'),
