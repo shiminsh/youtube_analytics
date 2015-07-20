@@ -69,10 +69,43 @@ def callback(request):
     return HttpResponse(json.dumps(result))
 
 
-# def channel_id(request):
-#     return render_to_response('channel.html', context_instance=RequestContext(request))
+def channel_id(request):
+    return render_to_response('channel.html', context_instance=RequestContext(request))
 
-# def info(request):
-#     channel_id=ChannelId.objects.all()
-#     print channel_id
-#     return HttpResponse(channel_id)
+def authentication(request):
+    channel = request.POST.get('channelId')
+    request.session['channel'] = channel
+    url = 'https://accounts.google.com/o/oauth2/auth?client_id='+settings.CLIENT_ID+'&redirect_uri=http://127.0.0.1:8000/posted&scope=https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtubepartner-channel-audit https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtubepartner&response_type=code&access_type=offline'
+    return HttpResponseRedirect(url)
+
+def info(request):
+    code = request.GET.get('code')
+    channel = request.session['channel']
+    print code
+    payload = {'grant_type':'authorization_code', 'code':code,'client_id':settings.CLIENT_ID, 'client_secret':settings.CLIENT_SECRET, 'redirect_uri':'http://127.0.0.1:8000/posted'}
+    response = requests.post('https://accounts.google.com/o/oauth2/token', data=payload)
+    print response.text
+    response = json.loads(response.text)
+    print response
+    access_token = response['access_token']
+    #request.session['access_token'] = access_token
+    print access_token
+    response = requests.get('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=%s&fields=items(contentDetails(relatedPlaylists(uploads)))&access_token=%s' % (channel, access_token))
+    upload_playlist = json.loads(response.text)['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+    print upload_playlist, "Upload Playlist"
+    response = requests.get('https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=%s&fields=items(contentDetails(videoId))&access_token=%s' % (upload_playlist, access_token))
+    print json.loads(response.text)
+    video_ids = []
+    try:
+        for x in json.loads(response.text)['items']:
+            video_ids.append(str(x['contentDetails']['videoId']))
+    except:
+        pass
+    video_list_string = ','.join(video_ids)
+    print video_ids
+    print video_list_string
+    response = requests.get('https://www.googleapis.com/youtube/v3/videos?part=statistics&id=%s&fields=items(id,statistics(viewCount,likeCount))&access_token=%s' % (video_list_string, access_token))
+    result = json.loads(response.text)
+    print response.text
+    print result
+    return HttpResponse(json.dumps(result))

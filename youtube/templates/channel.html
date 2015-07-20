@@ -5,11 +5,11 @@
 </head>
 <body>
 <div class="container marketing">
-<form class="form-horizontal" action="/posted/" name="myForm" method="post">{% csrf_token %}
+<form class="form-horizontal" action="/authentication/" name="myForm" method="post">{% csrf_token %}
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">Enter Channel Id</label>
       <div class="col-lg-10">
-        <textarea class="form-control" name="blogbody" cols="30" rows="5" id="textArea"></textarea>
+        <textarea class="form-control" name="channelId" cols="30" rows="5" id="textArea"></textarea>
       </div>
     </div>
     <div class="form-group">

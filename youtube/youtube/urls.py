@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^link/google/$', 'youtube.views.linkgoogle', name="linkgoogle"),
     url(r'^oauth2callback/$', 'youtube.views.callback', name='callback'),
     url(r'^channel/$', 'youtube.views.channel_id', name='channel_id'),
+    url(r'^authentication/$', 'youtube.views.authentication', name='authentication'),
     url(r'^posted/$', 'youtube.views.info', name='info'),
 )
