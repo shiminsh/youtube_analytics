@@ -4,6 +4,8 @@ import urlparse
 import datetime
 
 from analytics.models import *
+from django.core import serializers
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.template import RequestContext
@@ -109,3 +111,24 @@ def info(request):
     print response.text
     print result
     return HttpResponse(json.dumps(result))
+
+def details(request):
+    subs = request.GET.get('subs', None)
+    if not subs:
+        subs = 400
+    ch_details = ChannelDetails.objects.filter(subs_limit = True).exclude(subscriber__lte=subs)
+    paginator = Paginator(ch_details, 25)
+
+    page = request.GET.get('page')
+    try:
+        finals = paginator.page(page)
+    except PageNotAnInteger:
+        finals = paginator.page(1)
+    except EmptyPage:
+        finals = paginator.page(paginator.num_pages)
+    data = serializers.serialize("json", finals)
+    print data
+    if request.is_ajax():
+        return HttpResponse(data)
+    else:
+        return render_to_response('youtube_details.html',{'ch_details':ch_details, 'finals':finals, 'subs':subs}, context_instance=RequestContext(request))

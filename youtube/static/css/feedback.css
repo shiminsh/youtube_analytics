@@ -1,0 +1,73 @@
+#container1 {
+    margin-bottom: 120px;
+    padding:20px;
+    background-color:#f5f5f5;
+}
+
+.rating {
+    margin-left: 30px;
+}
+
+div.skill {
+    background: white;
+    border-radius: 3px;
+    color: black;
+    font-weight: bold;
+    padding: 1px 2px;
+    width: 10em;
+}
+
+.skillLine {
+    display: inline-block;
+    width: 100%;
+    min-height: 90px;
+    padding: 3px 4px;
+}
+
+.skillLineDefault {
+    padding: 3px 4px;
+}
+.rating1 {
+    margin-left: 30px;
+}
+
+div.skill1 {
+    background: white;
+    border-radius: 1px;
+    color: black;
+    font-weight: bold;
+    padding: 0.5px 1px;
+    width: 10em;
+}
+
+.skillLine1 {
+    display: inline-block;
+    width: 40%;
+    min-height: 30px;
+    padding: 0.5px 1px;
+}
+
+.skillLineDefault1 {
+    padding: 0.5px 0.5px;
+}
+
+.progress {    
+    position: relative;
+    height: 25px;
+}
+
+.progress > .progress-type {
+    position: absolute;
+    left: 0px;
+    font-weight: 800;
+    padding: 3px 30px 2px 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(25, 25, 25, 0.2);
+}
+
+.progress > .progress-completed {
+    position: absolute;
+    right: 0px;
+    font-weight: 800;
+    padding: 3px 10px 2px;
+}

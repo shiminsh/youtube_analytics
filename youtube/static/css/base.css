@@ -1,0 +1,36 @@
+#scroll{
+  text-align: center;
+  border-bottom: 2px solid white;
+}
+.navbar .brand, .navbar .nav > li > a {
+    color: white;
+}
+.navbar .brand, .navbar .nav > li > a:hover {
+    color: white;
+}
+.connecting {
+        height: 2.2em;
+        margin-top: -10px;
+    }
+.navbar{
+  min-height:20px;
+}
+i{
+  padding:3px;
+}
+.btn-search{
+  background:#fdd922;
+}
+input.form-control.search-input{
+  width:800px;
+}
+.cart-color{
+  color:#fdd922;
+}
+b{
+  color:white;
+}
+.navbar-fixed-bottom{
+  position:relative;
+  background:rgb(7,36,50);
+}

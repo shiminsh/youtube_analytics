@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Youtube Details</title>
+
+        <link href="{% static "css/bootstrap.min.css" %}" media="screen" rel="stylesheet">
+        <link href="{% static "startbootstrap/css/bootstrap.min.css" %}" media="screen" rel="stylesheet">
+        <link href="{% static "startbootstrap/css/portfolio-item.css" %}" media="screen" rel="stylesheet">
+        <script src="{% static "js/jquery.min.js" %}"></script>
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
+          <meta charset="utf-8">
+  <title>jQuery UI Slider - Default functionality</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+    $(function() {
+    $( "#slider-range-min" ).slider({
+      range: "min",
+      value: {{subs}},
+      min: 400,
+      max: 70000000,
+      slide: function( event, ui ) {
+        $( "#amount" ).val(ui.value );
+        },
+      stop: function(event, ui){
+        window.location.href="?subs="+ui.value;
+      }
+      });
+      $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ) );
+    });
+  </script>
+        
+</head>
+<body>
+<div class="container">
+   <!--  <div>
+        <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="400" data-slider-max="200000000" data-slider-step="1" data-slider-value="400"/>
+    </div> -->
+    <div class="row " id="mainfulldiv">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                    <div class="panel panel-default" onclick="return init_map(0);">
+                        <div class="row padall">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                <span></span>
+                                <img id="main-img" src="data:image/png;base64,{{ finals.0.pic }}" />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                      <h3><a href="https://www.youtube.com/channel/{{ finals.0.ch_id }}"
+                                        <span id="main-title">{{finals.0.name}}</span></a></h3>
+                                    </div>
+                                    <div class="pull-right col-xs-6 col-md-6 nopadding main-link">
+                                        <span><a href="{{channel.fb_link}}"><img src="{% static "img/facebook.jpg" %}" /></a></span>
+                                      <span><a href="{{channel.twitter_link}}"><img src="{% static "img/twitter.jpg" %}" /></a></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4><span id="main-subscribers">{{finals.0.subscriber}}</span> Subscribers</h4>
+                                    <h4><span id="main-views">{% if not channel.views %}0{% else %}{{finals.0.views}}{% endif %}</span> Views</h4>
+                                    <p><span style="color:#999999;" id="main-joined" >{{finals.0.date_joined}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+<hr>
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <p>
+            <label for="amount">Minimum subscriber:</label>
+            <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range-min"></div>
+      </div>
+      <div class="col-lg-4"></div>
+
+</div>
+<hr>
+        <div class="row">
+
+        {% for channel in finals %}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 fulldiv">
+            <div class="panel panel-default">
+                <div class="row padall">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                        <span></span>
+                        <img class="title-img" src="data:image/png;base64,{{ channel.pic }}" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <h4><span class="title-name"> {{channel.name}}</span><h4>
+                            </div>
+                            <div class="pull-right nopadding link">
+                                <span><a href="{{channel.fb_link}}"><img class="img-responsive inline-block" src="{% static "img/facebook.jpg" %}" /></a><a href="{{channel.twitter_link}}"></span>
+                                <span><img class="img-responsive inline-block" src="{% static "img/twitter.jpg" %}" /></a></span>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h5><span class="title-subscribers">{{channel.subscriber}}</span> Subscribers</h5>
+                            <h5><span class="title-views">{% if not channel.views %}0{% else %}{{ channel.views }}{% endif %}</span> Views</h5>
+                            <p><span style="color:#999999;" class="title-joined" >{{channel.date_joined}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+    <ul class="pager">
+        {% if finals.has_previous %}
+          <li class="previous"><a href="?page={{ finals.previous_page_number }}">← Previous</a></li>
+          {% endif %}
+        <li class="current">
+            Page {{ finals.number }} of {{ finals.paginator.num_pages }}.
+        </li>          
+          {% if finals.has_next %}
+          <li class="next"><a href="?page={{ finals.next_page_number }}&subs={{subs}}">Next →</a></li>
+          {% endif %}
+        </ul>
+</div>
+
+<style>
+img {
+    max-width: 110%;
+    height: auto;      
+}
+
+.clearfix {
+    clear:both;
+}
+
+.rowcolor {
+    background-color:#CCCCCC;
+}
+
+.padall {
+    padding:10px;
+}
+
+.icon {
+    font-size:23px;
+    color:#197BB5;
+}
+.link{
+    max-width: 6%;
+    height: auto; 
+}
+.main-link {
+    max-width: 3%;
+    height: auto;
+}
+.nopadding {
+   padding: 0 !important;
+   margin:  0 !important;
+}
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+</style>
+<script type="text/javascript">
+// $('#ex1').slider({
+//     formatter: function(value) {
+//         return 'Current value: ' + value;
+//     }
+// });
+
+// // Without JQuery
+// var slider = new Slider('#ex1', {
+//     formatter: function(value) {
+//         return 'Current value: ' + value;
+//     }
+// });
+$(".title-name").on('click', function(e){
+  var divhtml = $(this).parents(".fulldiv").html();
+  var title = $(divhtml).find(".title-name").html();
+  var subscribers = $(divhtml).find(".title-subscribers").html();
+  var views = $(divhtml).find(".title-views").html();
+  var joined = $(divhtml).find(".title-joined").html();
+  var imgsrc = $(divhtml).find(".title-img").attr('src');
+  $("#main-title").html(title);
+  $("#main-subscribers").html(subscribers);
+  $("#main-views").html(views);
+  $("#main-joined").html(joined);
+  $("#main-img").attr('src', imgsrc);
+});
+</script>
+
+</body>
+</html>

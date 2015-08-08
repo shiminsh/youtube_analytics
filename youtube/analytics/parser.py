@@ -29,9 +29,17 @@ class ParseChannel:
             data = requests.get(str(x.about_url))
             soup = BeautifulSoup(data.text)
             image = soup.find('img', class_="channel-header-profile-image")
-            img_url = str(image['src'])
-            response = request.get(img_url)
-            img_url = base64.b64encode(response.content)
+            print "img_url1 ->", str(image['src'])
+            try:
+                img_url = 'https:' + str(image['src'])
+                print "img_url ->", img_url
+                response = requests.get(img_url)
+                img_url = base64.b64encode(response.content)
+            except:
+                img_url = str(image['src'])
+                print "img_url ->", img_url
+                response = requests.get(img_url)
+                img_url = base64.b64encode(response.content)
             name = soup.find('a', class_="branded-page-header-title-link")
             name = name.string
             stats = soup.find_all('span', class_="about-stat")
@@ -97,7 +105,15 @@ class ParseChannel:
                 except:
                     pass
             
-            
+    
+    def infinite_loop(self):
+        status = ChannelDetails.objects.filter(status=False)
+        fetched = ChannelDetails.objects.filter(fetched = False)
+        if len(status) == 0 and len(fetched) == 0:
+            return False
+        else:
+            return True
+
         
 
 

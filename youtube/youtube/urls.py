@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^channel/$', 'youtube.views.channel_id', name='channel_id'),
     url(r'^authentication/$', 'youtube.views.authentication', name='authentication'),
     url(r'^posted/$', 'youtube.views.info', name='info'),
+    url(r'^details/$', 'youtube.views.details', name='details'),
 )

@@ -1,0 +1,30 @@
+#carousel1{
+  top:-3em;
+}
+#carousel1 .nav a small {
+    display: block;
+}
+#carousel1 .nav {
+    background: #eee;
+}
+.nav-justified > li > a {
+    border-radius: 0px;
+}
+.nav-pills > li[data-slide-to="0"].active a {
+    background-color: #b4d9a7;
+}
+.nav-pills > li[data-slide-to="1"].active a {
+    background-color: #4f77cb;
+}
+.nav-pills > li[data-slide-to="2"].active a {
+    background-color: #d11e4f;
+}
+
+.carousel-inner .active.left { left: -25%; }
+.carousel-inner .next        { left:  25%; }
+.carousel-inner .prev    { left: -25%; }
+.carousel-control        { width:  4%; }
+.carousel-control.left,.carousel-control.right {margin-left:15px;background-image:none;}
+.heading{
+  color:#005387;
+}
