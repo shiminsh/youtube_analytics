@@ -100,7 +100,7 @@ class ParseChannel:
             p.save()
             for q in distinct_ids:
                 try:
-                    obj = ChannelDetails(ch_id=channel_id)
+                    obj = ChannelDetails(ch_id=q)
                     obj.save()
                 except:
                     pass
