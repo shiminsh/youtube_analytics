@@ -1,0 +1,8 @@
+# Latest Stable Release of Django
+django==1.7.7
+
+# Bootstrap
+django-bootstrap3
+
+beautifulsoup4
+requests
