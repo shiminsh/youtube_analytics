@@ -15,6 +15,8 @@ For inserting details of fetched channels
 For fetching all channels inside the existing channels in the database.
 >>>obj.fetch_channels() 
 
+```
+
 ### To run infinetly to fill the database then do this.
 
 ```
@@ -27,3 +29,5 @@ For fetching all channels inside the existing channels in the database.
 ...     obj.fetch_channels()
 ...     e = obj.infinite_loop()
 ... 
+
+```
