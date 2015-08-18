@@ -70,7 +70,7 @@ class ParseChannel:
                     pass
             try:
                 country = soup.find('span', class_="country-inline")
-                country = country.string
+                country = str(country.string).strip()
             except:
                 country = "others"
             print "country -------------->>>>>>>>>>" , country
