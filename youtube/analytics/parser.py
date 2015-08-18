@@ -43,13 +43,13 @@ class ParseChannel:
             name = soup.find('a', class_="branded-page-header-title-link")
             name = name.string
             stats = soup.find_all('span', class_="about-stat")
-            subscriber = None
+            subscriber = 0
             if len(stats) > 1:
                 subscriber = "".join(str(stats[0].b.string).split(","))
                 if int(subscriber) > 400:
                     x.subs_limit = True
             date = stats[-1].string
-            views = None
+            views = 0
             if len(stats) > 2:
                 views = "".join(str(stats[1].b.string).split(","))
             links = soup.find_all('a', class_="about-channel-link")
@@ -68,6 +68,12 @@ class ParseChannel:
                         fb_link = str(link['href'])
                 except:
                     pass
+            try:
+                country = soup.find('span', class_="country-inline")
+                country = country.string
+            except:
+                country = "others"
+            print "country -------------->>>>>>>>>>" , country
             x.name = name
             x.pic = img_url
             x.views = views
@@ -77,6 +83,7 @@ class ParseChannel:
             x.twitter_link = twit_link
             x.date_joined = date
             x.status = True
+            x.country = country
             x.save()
 
     def fetch_channels(self):    

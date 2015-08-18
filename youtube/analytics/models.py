@@ -11,9 +11,10 @@ class ChannelDetails(models.Model):
     fb_link = models.CharField(_('Facebook link'), max_length=250, blank=True, null=True)
     twitter_link = models.CharField(_('Twitter link'), max_length=250, blank=True, null=True)
     date_joined = models.CharField(_('Joined Date'), max_length=100, blank=True, null=True)
+    country = models.CharField(_('Country'), max_length=100, blank=True, null=True)
     status = models.BooleanField(default=False)
     fetched = models.BooleanField(default=False)
-    subs_limit = models.BooleanField(default=False) 
+    subs_limit = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
