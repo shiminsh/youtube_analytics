@@ -92,7 +92,9 @@
             <select class="form-control" id="countryfilter">
                 <option>--Select--</option>
                 {% for country in countries %}
+                {% if not country %}{% else %}
                 <option value="{{country}}" class="country">{{ country }}</option>
+                {% endif %}
                 {% endfor %}
             </select>
       </div>
