@@ -4,6 +4,7 @@ import urlparse
 import datetime
 
 from analytics.models import *
+from django.db.models import Q
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
@@ -115,17 +116,17 @@ def info(request):
 def details(request):
     subs = request.GET.get('subs', None)
     country = request.GET.get('country', None)
-    print country
+    search = request.GET.get('search', None)
+    countries = ChannelDetails.objects.values_list('country', flat=True).distinct()
     if not subs:
         subs = 400
-    countries = ChannelDetails.objects.values_list('country', flat=True).distinct()
-    if not country:
+    if not country and subs:
+        ch_details = ChannelDetails.objects.filter(Q(name__icontains=search) | Q(ch_id__icontains=search)).exclude(subscriber__lte=subs)
+    elif not country:
         ch_details = ChannelDetails.objects.filter(subs_limit = True).exclude(subscriber__lte=subs)
     else:
         ch_details = ChannelDetails.objects.filter(subs_limit = True).exclude(subscriber__lte=subs)
-        print ch_details
         ch_details = ch_details.filter(country__icontains=str(country))
-        print ch_details
 
     paginator = Paginator(ch_details, 25)
 
@@ -137,8 +138,8 @@ def details(request):
     except EmptyPage:
         finals = paginator.page(paginator.num_pages)
     data = serializers.serialize("json", finals)
-    print data
     if request.is_ajax():
         return HttpResponse(data)
     else:
         return render_to_response('youtube_details.html',{'ch_details':ch_details, 'finals':finals, 'subs':subs, 'countries':countries}, context_instance=RequestContext(request))
+
