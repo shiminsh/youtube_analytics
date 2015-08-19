@@ -49,7 +49,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="row " id="mainfulldiv">
+<!--     <div class="row " id="mainfulldiv">
                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="panel panel-default" onclick="return init_map(0);">
                         <div class="row padall">
@@ -60,12 +60,16 @@
                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                                 <div class="clearfix">
                                     <div class="pull-left">
-                                      <h3><a href="https://www.youtube.com/channel/{{ finals.0.ch_id }}"
+                                      <h3><a href="https://www.youtube.com/channel/{{ finals.0.ch_id }}">
                                         <span id="main-title">{{finals.0.name}}</span></a></h3>
                                     </div>
                                     <div class="pull-right col-xs-6 col-md-6 nopadding main-link">
-                                        <span><a href="{{channel.fb_link}}"><img src="{% static "img/facebook.jpg" %}" /></a></span>
-                                      <span><a href="{{channel.twitter_link}}"><img src="{% static "img/twitter.jpg" %}" /></a></span>
+                                        {% if not channel.fb_link %}{% else %}
+                                        <span><a href="{{channel.fb_link}}"><img src="{% static "img/facebook.jpg" %}" /></a>
+                                        </span>{% endif %}
+                                        {% if not channel.twitter_link %}{% else %}
+                                      <span><a href="{{channel.twitter_link}}"><img src="{% static "img/twitter.jpg" %}" /></a>
+                                      </span>{% endif %}
                                     </div>
                                 </div>
                                 <div>
@@ -78,7 +82,7 @@
                     </div>
                 </div>
     </div>
-    <hr/>
+    <hr/> -->
     <div class="row">
       <div class="col-lg-4"></div>
       <div class="col-lg-4">
@@ -113,11 +117,13 @@
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                         <div class="clearfix">
                             <div class="pull-left">
-                                <h4><span class="title-name"> {{channel.name}}</span><h4>
+                                <h4><a target="_blank" href="https://www.youtube.com/channel/{{ channel.ch_id }}"><span class="title-name"> {{channel.name}}</span></a><h4>
                             </div>
                             <div class="pull-right nopadding link">
-                                <span><a href="{{channel.fb_link}}"><img class="img-responsive inline-block" src="{% static "img/facebook.jpg" %}" /></a><a href="{{channel.twitter_link}}"></span>
-                                <span><img class="img-responsive inline-block" src="{% static "img/twitter.jpg" %}" /></a></span>
+                              {% if not channel.fb_link %}{% else %}
+                                <span><a target="_blank" href="{{channel.fb_link}}"><img class="img-responsive inline-block" src="{% static "img/facebook.jpg" %}" /></a>{% endif %}{% if not channel.twitter_link %}{% else %}
+                                  <a target="_blank" href="{{channel.twitter_link}}"></span>
+                                <span><img class="img-responsive inline-block" src="{% static "img/twitter.jpg" %}" /></a></span>{% endif %}
                                 
                             </div>
                         </div>

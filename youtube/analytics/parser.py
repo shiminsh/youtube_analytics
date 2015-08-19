@@ -40,8 +40,11 @@ class ParseChannel:
                 print "img_url ->", img_url
                 response = requests.get(img_url)
                 img_url = base64.b64encode(response.content)
-            name = soup.find('a', class_="branded-page-header-title-link")
-            name = name.string
+            try:
+                name = soup.find('a', class_="branded-page-header-title-link")
+                name = name.string
+            except:
+                name = None
             stats = soup.find_all('span', class_="about-stat")
             subscriber = 0
             if len(stats) > 1:
