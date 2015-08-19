@@ -131,7 +131,10 @@
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                         <div class="clearfix">
                             <div class="pull-left">
-                                <h4><a target="_blank" href="https://www.youtube.com/channel/{{ channel.ch_id }}"><span class="title-name"> {{channel.name}}</span></a><h4>
+                              {% if not channel.name %}{% else %}
+                                <h4><a target="_blank" href="https://www.youtube.com/channel/{{ channel.ch_id }}">
+                                  <span class="title-name"> {{channel.name}}</span></a><h4>
+                                  {% endif %}
                             </div>
                             <div class="pull-right nopadding link">
                               {% if not channel.fb_link %}{% else %}
@@ -144,7 +147,9 @@
                         <div>
                             <h5><span class="title-subscribers">{{channel.subscriber}}</span> Subscribers</h5>
                             <h5><span class="title-views">{% if not channel.views %}0{% else %}{{ channel.views }}{% endif %}</span> Views</h5>
+                            {% if not channel.date_joined %}{% else %}
                             <p><span style="color:#999999;" class="title-joined" >{{channel.date_joined}}</span></p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

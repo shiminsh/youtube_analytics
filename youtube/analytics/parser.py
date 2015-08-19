@@ -51,7 +51,10 @@ class ParseChannel:
                 subscriber = "".join(str(stats[0].b.string).split(","))
                 if int(subscriber) > 400:
                     x.subs_limit = True
-            date = stats[-1].string
+            try:
+                date = stats[-1].string
+            except:
+                date = None
             views = 0
             if len(stats) > 2:
                 views = "".join(str(stats[1].b.string).split(","))
