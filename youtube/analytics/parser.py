@@ -127,7 +127,13 @@ class ParseChannel:
         else:
             return True
 
-        
+    def filldb_loop(self):
+        status = ChannelDetails.objects.filter(status=False)
+        fetched = ChannelDetails.objects.filter(fetched = False)
+        if len(status) == 0 and len(fetched) == 0:
+            return False
+        else:
+            return True
 
 
 
