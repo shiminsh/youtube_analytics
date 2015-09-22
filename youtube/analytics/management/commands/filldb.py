@@ -8,6 +8,8 @@ class Command(BaseCommand):
         obj = ParseChannel()
         e = True
         while e:
-            obj.insert_details()
-            obj.fetch_channels()
+            while obj.insert_details():
+                pass
+            while obj.fetch_channels():
+                pass
             e = obj.filldb_loop()

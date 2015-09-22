@@ -9,8 +9,8 @@ class Command(BaseCommand):
         details.delete()
         obj = ParseChannel()
         obj.initialize_db()
-        e = True
-        while e:
-            obj.insert_details()
-            obj.fetch_channels()
-            e = obj.infinite_loop()
+        # e = True
+        # while e:
+        #     obj.insert_details()
+        #     obj.fetch_channels()
+        #     e = obj.infinite_loop()
